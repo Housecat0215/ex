@@ -6,6 +6,7 @@
 </head>
 
 <body>
+<button onclick="switchOnOff()">時鐘開關</button>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/107/three.min.js"></script>
 <script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
 <script src="https://raw.githack.com/jyunming-chen/tutsplus/master/js/KeyboardState.js"></script>
@@ -16,6 +17,7 @@ var renderer, scene, camera;
 var controls, cube;
 var angle = 0;  // initialization IMPORTANT!
 var keyboard;
+var flag=0;
 
 init();
 animate();
@@ -37,15 +39,17 @@ function init () {
 	scene.add (axes);
 	
 	camera = new THREE.PerspectiveCamera (35, width/height, 1, 100);
-	camera.position.y = 16;
-	camera.position.z = 40;
+	camera.position.y = 50;
+	camera.position.z = 0;
+	camera
+	
 	camera.lookAt (new THREE.Vector3(0,0,0));
 	
 	controls = new THREE.OrbitControls(camera, renderer.domElement);
 	
 	window.addEventListener('resize', onWindowResize, false);
 	///////////////////////////////////////////////////////////////
-	var cubeGeometry = new THREE.BoxGeometry (3,1,2);
+	var cubeGeometry = new THREE.BoxGeometry (15,0.1,1);
 	var cubeMaterial = new THREE.MeshNormalMaterial();
 	cube = new THREE.Mesh (cubeGeometry, cubeMaterial);
 	scene.add (cube);
@@ -66,9 +70,9 @@ function onWindowResize() {
 
 function animate() {
 	<!--keyboard.update();-->
-	
 	<!--if (keyboard.pressed('Z'))-->
-		angle += 0.01;
+	if (flag==1)
+		angle += 0.00192;
 		
 	cube.position.set (8*Math.cos(angle), 0, 8*Math.sin(angle));
 	cube.rotation.y = -angle;
@@ -84,8 +88,12 @@ function render() {
 	
 }
 
-</script><canvas width="1920" height="559" style="width: 1920px; height: 559px;"></canvas>
+function switchOnOff() {
+	if(flag==0) flag=1;
+	else flag=0;
+}
 
+</script><canvas width="1920" height="559" style="width: 1920px; height: 559px;"></canvas>
 
 </body>
 </html>
